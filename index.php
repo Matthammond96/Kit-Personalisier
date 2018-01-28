@@ -17,7 +17,7 @@ $cordArray = array();
 // Pull Text From URL
 $text = '';
 if ( $_GET['kitname'] == '' ) {
-    $text = "kanekanekane";
+    $text = "mosi";
 } else {
     $text = $_GET['kitname'];
 }
@@ -25,28 +25,28 @@ if ( $_GET['kitname'] == '' ) {
 // Setting up image
 $r = 0;
 $text = strtoupper($text);
-$fontSize = 20;
+$fontSize = 26.5;
 $bgImage = 'img/home-kit.jpg';
 $my_img = imagecreatefromjpeg($bgImage);
 $fontname = 'font/Spurs_V1_004.ttf';
-$text_colour = imagecolorallocate( $my_img, 21, 29, 71);
+$text_colour = imagecolorallocate( $my_img, 22, 26, 74);
 imagealphablending($my_img, true);
 imagesavealpha($my_img, true);
 
 // Radius of X & Y
-$radX = 150;
-$radY = 70;
+$radX = 400;
+$radY = 400;
 // Setting Offset Values
-$offsetX = 0;
-$offsetY = 180;
-$offsetR = 0.5;
+$offsetX = 7.5;
+$offsetY = -168;
+$offsetR = 1.22;
 
 // Setting desired centre point
 $hx = (imagesx($my_img) / 2) - $offsetX;
 $hy = (imagesy($my_img) / 2) - $offsetY;
 
 // Number of sets in curve
-$stepsI = 360;
+$stepsI = 1260;
 $steps = 2 * pi() / $stepsI;
 $loopsCount = 0;
 
@@ -84,23 +84,25 @@ for ($theta = (2 * pi() / 2) + $offsetR; $theta < (2 * pi()) - $offsetR; $theta 
   $loopsCount++;
 }
 
+// Defininf String Length, Array Count and Emcerment amount between letters
+$stringLength = strlen($text);
+$arrayCount = count($cordArray);
+$emcrement = 10.5;
+
 // Function used to visually draw curve
-for ($m = 0; $m < 360; $m++) {
+for ($m = 0; $m < $arrayCount; $m++) {
     $drawX = $cordArray[$m]->x;
     $drawY = $cordArray[$m]->y;
 
     $letter = '.';
 
     // imagettftext($my_img, $fontSize, $r, $drawX, $drawY, $text_colour, $fontname, $letter);
+
+    // Vissuallising The horizontal Line
+    // imageline($my_img, $cordArray[0]->x, $cordArray[0]->y, $cordArray[$arrayCount - 1]->x, $cordArray[$arrayCount - 1]->y, 255);
 }
 
-// Defininf String Length, Array Count and Emcerment amount between letters
-$stringLength = strlen($text);
-$arrayCount = count($cordArray);
-$emcrement = 10;
-
-// Vissuallising The horizontal Line
-imageline($my_img, $cordArray[0]->x, $cordArray[0]->y, $cordArray[$arrayCount - 1]->x, $cordArray[$arrayCount - 1]->y, 255);
+$extraspacing;
 
 // Loop through Letters
 for ($n = 0; $n < $stringLength; $n++) {
@@ -110,12 +112,18 @@ for ($n = 0; $n < $stringLength; $n++) {
   $middleValue = $arrayCount / 2;
 
   // Fetching Curve Values from Object Array
-  $letterX = $cordArray[$middleValue + $letterSteps + ($emcrement / 2)]->x;
-  $letterY = $cordArray[$middleValue + $letterSteps + ($emcrement / 2)]->y;
-  $letterR = $cordArray[$middleValue + $letterSteps + ($emcrement / 2)]->r * -1;
+  $letterX = $cordArray[$middleValue + $letterSteps + 5.8]->x;
+  $letterY = $cordArray[$middleValue + $letterSteps + 5.8]->y;
+  $letterR = $cordArray[$middleValue + $letterSteps + 5.8]->r * -1;
+
+  switch ($text[$n]) {
+    case 'M':
+      $extraspacing = 4;
+    break;
+  }
 
   // Adding the Letters to the Image
-  imagettftext($my_img, $fontSize, $letterR / 2, $letterX, $letterY, $text_colour, $fontname, $text[$n]);
+  imagettftext($my_img, $fontSize, $letterR, $letterX, $letterY - 5, $text_colour, $fontname, $text[$n]);
 }
 
 // Required for image rendering
