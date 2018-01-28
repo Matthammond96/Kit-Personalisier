@@ -26,9 +26,9 @@ if ( $_GET['kitname'] == '' ) {
 $r = 0;
 $text = strtoupper($text);
 $fontSize = 20;
+$bgImage = 'img/home-kit.jpg';
 $my_img = imagecreatefromjpeg($bgImage);
 $fontname = 'font/Spurs_V1_004.ttf';
-$bgImage = 'img/home-kit.jpg';
 $text_colour = imagecolorallocate( $my_img, 21, 29, 71);
 imagealphablending($my_img, true);
 imagesavealpha($my_img, true);
@@ -105,7 +105,7 @@ imageline($my_img, $cordArray[0]->x, $cordArray[0]->y, $cordArray[$arrayCount - 
 // Loop through Letters
 for ($n = 0; $n < $stringLength; $n++) {
   // Centering Word on Curve
-  $difference = ($n) - ($stringLength / 2);
+  $difference = $n - ($stringLength / 2);
   $letterSteps = $difference * $emcrement;
   $middleValue = $arrayCount / 2;
 
